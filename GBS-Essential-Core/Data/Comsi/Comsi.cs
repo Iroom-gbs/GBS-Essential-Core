@@ -30,13 +30,15 @@ public static class Comsi
     public static string GetJsonOf(string cls, int date)
     {
         var sb = new StringBuilder();
-        sb.Append('[');
+        sb.Append("{\"Day\":");
+        sb.Append(date);
+        sb.Append(",[");
         foreach (var x in classes[cls][date])
         {
             sb.Append(x.ToJson());
             sb.Append(',');
         }
-        sb.Append(']');
+        sb.Append("]}");
         return sb.ToString();
     }
 
