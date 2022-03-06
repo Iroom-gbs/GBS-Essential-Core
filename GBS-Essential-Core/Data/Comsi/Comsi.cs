@@ -51,6 +51,7 @@ public static class Comsi
     {
         var options = new ChromeOptions();
         options.AddArgument("--incognito");
+        options.AddArgument("--headless");
         return new ChromeDriver(options);
     }
 
