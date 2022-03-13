@@ -32,7 +32,7 @@ public static class Comsi
         var sb = new StringBuilder();
         sb.Append("{\"Day\":");
         sb.Append(date);
-        sb.Append(",[");
+        sb.Append(",\"Data\":[");
         foreach (var x in classes[cls][date])
         {
             sb.Append(x.ToJson());
