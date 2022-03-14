@@ -13,17 +13,21 @@ public static class Comsi
     private static Dictionary<string, ClassInfoData[][]> classes { get; } = new();
     private static bool isUpdating = false;
 
-    public static string GetJsonOf(string cls)
+    public static string? GetJsonOf(string cls)
     {
+        if (!classes.ContainsKey(cls)) return null;
+
         var sb = new StringBuilder();
         sb.Append('[');
-        sb.Append(string.Join(',', Range(0, 5).Select(x => GetJsonOf(cls, x))));
+        sb.Append(string.Join(',', Range(0, 5).Select(x => GetJsonOf(cls, x)).Where(x => x is not null)));
         sb.Append(']');
         return sb.ToString();
     }
 
-    public static string GetJsonOf(string cls, int date)
+    public static string? GetJsonOf(string cls, int date)
     {
+        if (!classes.ContainsKey(cls)) return null;
+
         var sb = new StringBuilder();
         sb.Append("{\"Day\":");
         sb.Append(date);
