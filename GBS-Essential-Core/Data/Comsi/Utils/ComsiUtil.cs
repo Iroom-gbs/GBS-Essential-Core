@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace GBS_Essential_Core.Data.Comsi.Utils;
 
 public class ComsiUtil
@@ -12,7 +14,11 @@ public class ComsiUtil
         "이지" => "이지현",
         "김현" => "김현철",
         "이은" => "이은실",
-        "박동" and subject == "수학" => "박동우",
+        "박동" => subject switch
+        {
+            "수학" => "박동우",
+            _ => "박동"
+        },
         "전은" => "전은선",
         "감순" => "감순천",
         "오상" => "오상림",
