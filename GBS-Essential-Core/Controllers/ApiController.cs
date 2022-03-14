@@ -22,4 +22,4 @@ public class GbsEssentialController : ControllerBase
         }),
         var x => Ok(x)
     };
-}
+} 
