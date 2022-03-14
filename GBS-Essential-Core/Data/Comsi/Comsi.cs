@@ -112,7 +112,7 @@ public static class Comsi
                             {
                                 Day = day,
                                 Subject = GetFullSubjectName(k[0]),
-                                Teacher = GetFullTeacherName(k[0], k[1]),
+                                Teacher = GetFullTeacherName(GetFullSubjectName(k[0]), k[1]),
                                 Time = cls
                             };
                     }
