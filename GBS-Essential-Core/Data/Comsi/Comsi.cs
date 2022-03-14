@@ -17,12 +17,7 @@ public static class Comsi
     {
         var sb = new StringBuilder();
         sb.Append('[');
-        foreach (var x in Range(0, 5))
-        {
-            sb.Append(GetJsonOf(cls, x));
-            sb.Append(',');
-        }
-
+        sb.Append(string.Join(',', Range(0, 5).Select(x => GetJsonOf(cls, x))));
         sb.Append(']');
         return sb.ToString();
     }
@@ -33,11 +28,7 @@ public static class Comsi
         sb.Append("{\"Day\":");
         sb.Append(date);
         sb.Append(",\"Data\":[");
-        foreach (var x in classes[cls][date])
-        {
-            sb.Append(x.ToJson());
-            sb.Append(',');
-        }
+        sb.Append(string.Join(',', classes[cls][date].Select(x => x.ToJson())));
         sb.Append("]}");
         return sb.ToString();
     }
