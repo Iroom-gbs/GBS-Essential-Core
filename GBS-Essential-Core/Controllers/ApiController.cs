@@ -17,7 +17,7 @@ public class GbsEssentialController : ControllerBase
     {
         null => NotFound(new
         {
-            Error = $"Class {grd}-{cls} not found on parsed list. Is parse action executed?",
+            Error = $"Class {grd}-{cls} not found on parsed list. If you are right, then try parse first.",
             Data = new object[0]
         }),
         var x => Ok(x)
