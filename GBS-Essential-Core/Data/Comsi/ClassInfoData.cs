@@ -6,7 +6,8 @@ public class ClassInfoData
     public string Subject = "";
     public int Day = 0;
     public int Time = 0;
+    public string cls = "";
 
     public string ToJson()
-        => $"{{\"Teacher\":\"{Teacher}\",\"Subject\":\"{Subject}\",\"Day\":{Day},\"Time\":{Time}}}";
+        => $"{{\"Teacher\":\"{Teacher}\",\"Subject\":\"{Subject}\",\"Day\":{Day},\"Time\":{Time},\"Class\":{cls}}}";
 }

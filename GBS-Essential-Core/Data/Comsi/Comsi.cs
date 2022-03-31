@@ -13,6 +13,19 @@ public static class Comsi
     private static Dictionary<string, ClassInfoData[][]> classes { get; } = new();
     private static bool isUpdating = false;
 
+    public static string GetTeacherClass(string subject, string teacher)
+    {
+        var sb = new StringBuilder("[");
+        sb.Append(string.Join(',',
+            from x in classes.Values
+            from y in x
+            from z in y
+            where z.Subject == subject && z.Teacher == teacher
+            select z.ToJson()));
+        sb.Append(']');
+        return sb.ToString();
+    }
+
     public static string GetJsonOf(string cls)
     {
         var sb = new StringBuilder();
@@ -107,10 +120,11 @@ public static class Comsi
                     {
                         var k = dc[day + 1].Text.Split('\n');
                         if (k.Length < 2)
-                            classes[c][day][cls] = new ClassInfoData()
+                            classes[c][day][cls] = new ClassInfoData
                             {
                                 Day = day,
-                                Time = cls
+                                Time = cls,
+                                cls = c
                             };
                         else
                             classes[c][day][cls] = new ClassInfoData
@@ -118,7 +132,8 @@ public static class Comsi
                                 Day = day,
                                 Subject = GetFullSubjectName(k[0]),
                                 Teacher = GetFullTeacherName(k[0], k[1]),
-                                Time = cls
+                                Time = cls,
+                                cls = c
                             };
                     }
                 }

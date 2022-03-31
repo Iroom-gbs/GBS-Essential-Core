@@ -14,4 +14,8 @@ public class GbsEssentialController : ControllerBase
     [HttpGet("timetable/{grd}/{cls}")]
     public IActionResult GetClass(int grd, int cls)
         => Ok(Comsi.GetJsonOf($"{grd}-{cls}"));
+
+    [HttpGet("timetable/teacher/{subject}/{teacher}")]
+    public IActionResult GetTeacherInfo(string subject, string teacher)
+        => Ok(Comsi.GetTeacherClass(subject, teacher));
 }
