@@ -12,10 +12,18 @@ public class GbsEssentialController : ControllerBase
         => Ok("Essential api is working fine");
 
     [HttpGet("timetable/{grd}/{cls}")]
-    public IActionResult GetClass(int grd, int cls)
-        => Ok(Comsi.GetJsonOf($"{grd}-{cls}"));
-
+    public IActionResult GetClass(int grd, int cls) => Comsi.GetJsonOf($"{grd}-{cls}") switch
+    {
+        null => NotFound(new
+        {
+            Error = $"Class {grd}-{cls} not found on parsed list. If you are right, then try parse first.",
+            Data = new object[0]
+        }),
+        var x => Ok(x)
+    };
+    
+    
     [HttpGet("timetable/teacher/{subject}/{teacher}")]
     public IActionResult GetTeacherInfo(string subject, string teacher)
         => Ok(Comsi.GetTeacherClass(subject, teacher));
-}
+} 

@@ -25,8 +25,8 @@ public static class Comsi
         sb.Append(']');
         return sb.ToString();
     }
-
-    public static string GetJsonOf(string cls)
+    
+    public static string? GetJsonOf(string cls)
     {
         var sb = new StringBuilder();
         sb.Append('[');
@@ -120,18 +120,17 @@ public static class Comsi
                     {
                         var k = dc[day + 1].Text.Split('\n');
                         if (k.Length < 2)
-                            classes[c][day][cls] = new ClassInfoData
+                            classes[c][day][cls] = new ClassInfoData()
                             {
                                 Day = day,
-                                Time = cls,
-                                cls = c
+                                Time = cls
                             };
                         else
                             classes[c][day][cls] = new ClassInfoData
                             {
                                 Day = day,
                                 Subject = GetFullSubjectName(k[0]),
-                                Teacher = GetFullTeacherName(k[0], k[1]),
+                                Teacher = GetFullTeacherName(GetFullSubjectName(k[0]), k[1]),
                                 Time = cls,
                                 cls = c
                             };

@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "528563bc-b240-460b-b89d-e2bb25a082f5": {
+      "ProjectGuid": "528563bc-b240-460b-b89d-e2bb25a082f5",
+      "DisplayName": "GBS-Essential-Core",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
