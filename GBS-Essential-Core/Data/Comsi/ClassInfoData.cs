@@ -9,5 +9,5 @@ public class ClassInfoData
     public string cls = "";
 
     public string ToJson()
-        => $"{{\"Teacher\":\"{Teacher}\",\"Subject\":\"{Subject}\",\"Day\":{Day},\"Time\":{Time},\"Class\":{cls}}}";
+        => $"{{\"Teacher\":\"{Teacher}\",\"Subject\":\"{Subject}\",\"Day\":{Day},\"Time\":{Time},\"Class\":\"{cls}\"}}";
 }
