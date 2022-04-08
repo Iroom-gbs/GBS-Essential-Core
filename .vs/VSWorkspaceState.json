@@ -2,6 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\GBS-Essential-Core",
+    "\\GBS-Essential-Core\\Controllers",
     "\\GBS-Essential-Core\\Data",
     "\\GBS-Essential-Core\\Data\\Comsi",
     "\\GBS-Essential-Core\\Data\\Comsi\\Utils"
