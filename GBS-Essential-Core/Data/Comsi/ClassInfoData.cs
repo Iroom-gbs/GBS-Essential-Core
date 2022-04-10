@@ -1,6 +1,6 @@
 namespace GBS_Essential_Core.Data.Comsi;
 
-public class ClassInfoData
+public record ClassInfoData
 {
     public string Teacher = "";
     public string Subject = "";
