@@ -25,51 +25,25 @@ public static class Comsi
         sb.Append(']');
         return sb.ToString();
     }
-
+    
     public static string? GetJsonOf(string cls)
     {
-        try
-        {
-            var sb = new StringBuilder();
-            sb.Append('[');
-            foreach (var x in Range(0, 5))
-            {
-                sb.Append(GetJsonOf(cls, x));
-                sb.Append(',');
-            }
-
-            sb.Append(']');
-            return sb.ToString();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return null;
-        }
+        var sb = new StringBuilder();
+        sb.Append('[');
+        sb.Append(string.Join(',', Range(0, 5).Select(x => GetJsonOf(cls, x))));
+        sb.Append(']');
+        return sb.ToString();
     }
 
-    public static string? GetJsonOf(string cls, int date)
+    public static string GetJsonOf(string cls, int date)
     {
-        try
-        {
-            var sb = new StringBuilder();
-            sb.Append("{\"Day\":");
-            sb.Append(date);
-            sb.Append(",[");
-            foreach (var x in classes[cls][date])
-            {
-                sb.Append(x.ToJson());
-                sb.Append(',');
-            }
-
-            sb.Append("]}");
-            return sb.ToString();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return null;
-        }
+        var sb = new StringBuilder();
+        sb.Append("{\"Day\":");
+        sb.Append(date);
+        sb.Append(",\"data\":[");
+        sb.Append(string.Join(',', classes[cls][date].Select(x => x.ToJson())));
+        sb.Append("]}");
+        return sb.ToString();
     }
 
     private static FirefoxDriver InitializeFirefox()
