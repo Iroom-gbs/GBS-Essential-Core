@@ -21,6 +21,17 @@ public class GbsEssentialController : ControllerBase
         }),
         var x => Ok(x)
     };
+
+    [HttpGet("timetable/raw/{grd}/{cls}")]
+    public IActionResult GetRawClass(int grd, int cls) => Comsi.GetRawJsonOf($"{grd}-{cls}") switch
+    {
+        null => NotFound(new
+        {
+            Error = $"Class {grd}-{cls} not found on parsed list. If you are right, then try parse first.",
+            Data = Array.Empty<object>()
+        }),
+        var x => Ok(x)
+    };
     
     [HttpGet("timetable/{grd}/{cls}/{date}")]
     public IActionResult GetClass(int grd, int cls, int date) => Comsi.GetJsonOf($"{grd}-{cls}", date) switch
@@ -33,6 +44,16 @@ public class GbsEssentialController : ControllerBase
         var x => Ok(x)
     };
     
+    [HttpGet("timetable/raw/{grd}/{cls}/{date}")]
+    public IActionResult GetRawClass(int grd, int cls, int date) => Comsi.GetRawJsonOf($"{grd}-{cls}", date) switch
+    {
+        null => NotFound(new
+        {
+            Error = $"Class {grd}-{cls} Date: {date} not found on parsed list. If you are right, then try parse first.",
+            Data = Array.Empty<object>()
+        }),
+        var x => Ok(x)
+    };
     
     [HttpGet("timetable/teacher/{subject}/{teacher}")]
     public IActionResult GetTeacherInfo(string subject, string teacher)

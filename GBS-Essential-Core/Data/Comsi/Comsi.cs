@@ -45,6 +45,26 @@ public static class Comsi
         sb.Append("]}");
         return sb.ToString();
     }
+    
+    public static string? GetRawJsonOf(string cls)
+    {
+        var sb = new StringBuilder();
+        sb.Append('[');
+        sb.Append(string.Join(',', Range(0, 5).Select(x => GetRawJsonOf(cls, x))));
+        sb.Append(']');
+        return sb.ToString();
+    }
+
+    public static string GetRawJsonOf(string cls, int date)
+    {
+        var sb = new StringBuilder();
+        sb.Append("{\"Day\":");
+        sb.Append(date);
+        sb.Append(",\"data\":[");
+        sb.Append(string.Join(',', classes[cls][date].Select(x => x.ToRawJson())));
+        sb.Append("]}");
+        return sb.ToString();
+    }
 
     private static FirefoxDriver InitializeFirefox()
     {
@@ -120,8 +140,8 @@ public static class Comsi
                             classes[c][day][cls] = new ClassInfoData
                             {
                                 Day = day,
-                                Subject = GetFullSubjectName(k[0]),
-                                Teacher = GetFullTeacherName(GetFullSubjectName(k[0]), k[1]),
+                                Subject = k[0],//GetFullSubjectName(k[0]),
+                                Teacher = k[1],//GetFullTeacherName(GetFullSubjectName(k[0]), k[1]),
                                 Time = cls,
                                 cls = c
                             };

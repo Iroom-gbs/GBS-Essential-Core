@@ -1,3 +1,5 @@
+using static GBS_Essential_Core.Data.Comsi.Utils.ComsiUtil;
+
 namespace GBS_Essential_Core.Data.Comsi;
 
 public record ClassInfoData
@@ -8,6 +10,8 @@ public record ClassInfoData
     public int Time = 0;
     public string cls = "";
 
-    public string ToJson()
+    public string ToRawJson() 
         => $"{{\"Teacher\":\"{Teacher}\",\"Subject\":\"{Subject}\",\"Day\":{Day},\"Time\":{Time},\"Class\":\"{cls}\"}}";
+    public string ToJson()
+        => $"{{\"Teacher\":\"{GetFullTeacherName(Subject, Teacher)}\",\"Subject\":\"{GetFullSubjectName(Subject)}\",\"Day\":{Day},\"Time\":{Time},\"Class\":\"{cls}\"}}";
 }
