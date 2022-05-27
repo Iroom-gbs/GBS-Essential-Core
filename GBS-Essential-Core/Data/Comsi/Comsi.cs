@@ -85,84 +85,83 @@ public static class Comsi
     {
         if (isUpdating) return RenewResult.AlreadyRunning;
         isUpdating = true;
-        IWebDriver driver = InitializeChrome();
-        try
+        new Thread(() =>
         {
-            driver.Url = "http://comci.kr:4082/st";
-            driver.Navigate().GoToUrl("http://comci.kr:4082/st");
-
-            driver.FindElement(By.XPath("//*[@id=\"sc\"]")).SendKeys("경기북과학고");
-            driver.ExecJs("sc2_search();");
-            while (driver.FindElements(By.XPath("/html/body/div[3]/table[2]/tbody/tr[2]/td[2]/a")).Count == 0)
+            IWebDriver driver = InitializeChrome();
+            try
             {
-            }
+                driver.Url = "http://comci.kr:4082/st";
+                driver.Navigate().GoToUrl("http://comci.kr:4082/st");
 
-            driver.ExecJs("sc_disp(12045);");
-
-            foreach (var c in classList)
-            {
-                if (c == "3-5")
-                    MoveToPreviousClass(driver);
-                IWebElement[] classInfoHtml;
-                while (true)
+                driver.FindElement(By.XPath("//*[@id=\"sc\"]")).SendKeys("경기북과학고");
+                driver.ExecJs("sc2_search();");
+                while (driver.FindElements(By.XPath("/html/body/div[3]/table[2]/tbody/tr[2]/td[2]/a")).Count == 0)
                 {
-                    try
-                    {
-                        classInfoHtml = driver.FindElement(By.XPath("/html/body/div[4]/div[1]/table/tbody"))
-                            .FindElements(By.TagName("tr")).ToArray()[2..];
-                        break;
-                    }
-                    catch (Exception)
-                    {
-                    }
-
-                    Thread.Sleep(10);
                 }
 
-                classes[c] = new ClassInfoData[5][];
-                for (var i = 0; i < 5; i++)
-                    classes[c][i] = new ClassInfoData[7];
-                for (var cls = 0; cls < 7; cls++)
+                driver.ExecJs("sc_disp(12045);");
+
+                foreach (var c in classList)
                 {
-                    var dc = classInfoHtml[cls].FindElements(By.TagName("td"));
-                    while (dc.Count == 0)
-                        dc = classInfoHtml[cls].FindElements(By.TagName("td"));
-                    for (var day = 0; day < 5; day++)
+                    if (c == "3-5")
+                        MoveToPreviousClass(driver);
+                    IWebElement[] classInfoHtml;
+                    while (true)
                     {
-                        var k = dc[day + 1].Text.Split('\n');
-                        if (k.Length < 2)
-                            classes[c][day][cls] = new ClassInfoData()
-                            {
-                                Day = day,
-                                Time = cls
-                            };
-                        else
-                            classes[c][day][cls] = new ClassInfoData
-                            {
-                                Day = day,
-                                Subject = k[0],//GetFullSubjectName(k[0]),
-                                Teacher = k[1],//GetFullTeacherName(GetFullSubjectName(k[0]), k[1]),
-                                Time = cls,
-                                cls = c
-                            };
+                        try
+                        {
+                            classInfoHtml = driver.FindElement(By.XPath("/html/body/div[4]/div[1]/table/tbody"))
+                                .FindElements(By.TagName("tr")).ToArray()[2..];
+                            break;
+                        }
+                        catch (Exception)
+                        {
+                            //Ignore
+                        }
+
+                        Thread.Sleep(10);
                     }
+
+                    classes[c] = new ClassInfoData[5][];
+                    for (var i = 0; i < 5; i++)
+                        classes[c][i] = new ClassInfoData[7];
+                    for (var cls = 0; cls < 7; cls++)
+                    {
+                        var dc = classInfoHtml[cls].FindElements(By.TagName("td"));
+                        while (dc.Count == 0)
+                            dc = classInfoHtml[cls].FindElements(By.TagName("td"));
+                        for (var day = 0; day < 5; day++)
+                        {
+                            var k = dc[day + 1].Text.Split('\n');
+                            if (k.Length < 2)
+                                classes[c][day][cls] = new ClassInfoData()
+                                {
+                                    Day = day,
+                                    Time = cls
+                                };
+                            else
+                                classes[c][day][cls] = new ClassInfoData
+                                {
+                                    Day = day,
+                                    Subject = k[0], //GetFullSubjectName(k[0]),
+                                    Teacher = k[1], //GetFullTeacherName(GetFullSubjectName(k[0]), k[1]),
+                                    Time = cls,
+                                    cls = c
+                                };
+                        }
+                    }
+
+                    if (c != "3-5")
+                        MoveToNextClass(driver);
                 }
-
-                if (c != "3-5")
-                    MoveToNextClass(driver);
             }
-
-            return RenewResult.Ok;
-        }
-        catch (Exception)
-        {
-            return RenewResult.Failed;
-        }
-        finally
-        {
-            driver.Quit();
-            isUpdating = false;
-        }
+            finally
+            {
+                driver.Quit();
+                isUpdating = false;
+            }
+        }).Start();
+        return RenewResult.Ok;
     }
 
     private static void MoveToNextClass(IWebDriver driver)

@@ -11,7 +11,7 @@ public class GbsEssentialController : ControllerBase
     public IActionResult Index()
         => Ok("Essential api is working fine");
 
-    [HttpGet("timetable/{grd}/{cls}")]
+    [HttpGet("timetable/{grd:int}/{cls:int}")]
     public IActionResult GetClass(int grd, int cls) => Comsi.GetJsonOf($"{grd}-{cls}") switch
     {
         null => NotFound(new
@@ -22,7 +22,7 @@ public class GbsEssentialController : ControllerBase
         var x => Ok(x)
     };
 
-    [HttpGet("timetable/raw/{grd}/{cls}")]
+    [HttpGet("timetable/raw/{grd:int}/{cls:int}")]
     public IActionResult GetRawClass(int grd, int cls) => Comsi.GetRawJsonOf($"{grd}-{cls}") switch
     {
         null => NotFound(new
@@ -33,7 +33,7 @@ public class GbsEssentialController : ControllerBase
         var x => Ok(x)
     };
     
-    [HttpGet("timetable/{grd}/{cls}/{date}")]
+    [HttpGet("timetable/{grd:int}/{cls:int}/{date:int}")]
     public IActionResult GetClass(int grd, int cls, int date) => Comsi.GetJsonOf($"{grd}-{cls}", date) switch
     {
         null => NotFound(new
@@ -44,7 +44,7 @@ public class GbsEssentialController : ControllerBase
         var x => Ok(x)
     };
     
-    [HttpGet("timetable/raw/{grd}/{cls}/{date}")]
+    [HttpGet("timetable/raw/{grd:int}/{cls:int}/{date:int}")]
     public IActionResult GetRawClass(int grd, int cls, int date) => Comsi.GetRawJsonOf($"{grd}-{cls}", date) switch
     {
         null => NotFound(new
@@ -63,7 +63,7 @@ public class GbsEssentialController : ControllerBase
     public IActionResult GetMealInfo()
         => Ok();
 
-    [HttpGet("meal/{time}")]
+    [HttpGet("meal/{time:int}")]
     public IActionResult GetMealInfo(int time)
         => Ok();
 } 

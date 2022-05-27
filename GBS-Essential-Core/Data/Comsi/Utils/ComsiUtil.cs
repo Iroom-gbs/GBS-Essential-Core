@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 namespace GBS_Essential_Core.Data.Comsi.Utils;
 
-public class ComsiUtil
+public static class ComsiUtil
 {
     public static string GetFullTeacherName(string subject, string teacher) => teacher switch
     {
@@ -30,7 +30,6 @@ public class ComsiUtil
         "손상" => "손상원",
         "최난" => "최난희",
         "김보" => "김보선",
-        "오상" => "오상림",
         _ => teacher
     };
 
